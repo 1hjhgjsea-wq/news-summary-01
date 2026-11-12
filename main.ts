@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+
 const src = join(dirname(fileURLToPath(import.meta.url)), "summary.txt");
 let bytes: Buffer;
 try {
@@ -9,7 +10,7 @@ try {
   console.error("summary.txt is missing next to main.ts");
   process.exit(1);
 }
-if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
+if (bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
   bytes = bytes.subarray(3);
 }
 const len = Array.from(bytes.toString("utf8")).length;
